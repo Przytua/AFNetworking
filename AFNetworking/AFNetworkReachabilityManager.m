@@ -203,9 +203,8 @@ static void AFNetworkReachabilityReleaseCallback(const void *info) {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),^{
                 SCNetworkReachabilityFlags flags;
                 SCNetworkReachabilityGetFlags(self.networkReachability, &flags);
-                AFNetworkReachabilityStatus status = AFNetworkReachabilityStatusForFlags(flags);
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    callback(status);
+                    AFNetworkReachabilityCallback(NULL, flags, (__bridge void *)callback);
                 });
             });
         }
